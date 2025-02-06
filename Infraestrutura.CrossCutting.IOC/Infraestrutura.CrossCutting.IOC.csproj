@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aplicacao\Aplicacao.Servico.csproj" />
+    <ProjectReference Include="..\Domain.Services\Dominio.Servico.csproj" />
+    <ProjectReference Include="..\Infraestrutura.Repositorio\Infraestrutura.Repositorio.csproj" />
+  </ItemGroup>
+
+</Project>

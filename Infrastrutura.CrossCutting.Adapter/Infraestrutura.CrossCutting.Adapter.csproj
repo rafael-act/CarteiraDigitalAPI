@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aplicacao.DTO\Aplicacao.DTO.csproj" />
+    <ProjectReference Include="..\Dominio\Dominio.Modelos.csproj" />
+  </ItemGroup>
+
+</Project>
