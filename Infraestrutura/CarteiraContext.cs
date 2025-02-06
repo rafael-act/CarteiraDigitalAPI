@@ -21,13 +21,6 @@ namespace Infraestrutura.Data
         public DbSet<Carteira> Carteiras { get; set; }
         public DbSet<Transacao> Transacoes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(connectionString:
-               "Server=localhost;Port=5432;User Id=postgres;Password=passw0rd;Database=testdb;");
-            base.OnConfiguring(optionsBuilder);
-        }
-
         public override int SaveChanges()
         {
             foreach (var entry in ChangeTracker.Entries().Where(entry=>entry.Entity.GetType().GetProperty("DataCadastro") != null))

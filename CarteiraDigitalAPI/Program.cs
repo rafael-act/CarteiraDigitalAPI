@@ -1,5 +1,9 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Infraestrutura.CrossCutting.IOC;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace CarteiraDigitalAPI
 {
@@ -15,8 +19,14 @@ namespace CarteiraDigitalAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<CarteiraContext>(optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
-            
+            builder.Services.AddDbContext<CarteiraContext>(
+                optionsBuilder => optionsBuilder.UseNpgsql(
+                    builder.Configuration.GetConnectionString("connectionString")
+                    )
+                );
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new ModuleIOC()));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +36,7 @@ namespace CarteiraDigitalAPI
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carteira Digital API");
-                    c.RoutePrefix = String.Empty;
+                    
                 });
             }
             app.UseHttpsRedirection();
@@ -34,7 +44,7 @@ namespace CarteiraDigitalAPI
             app.UseAuthorization();
 
             app.MapControllers();
-            
+
             app.Run();
         }
     }
