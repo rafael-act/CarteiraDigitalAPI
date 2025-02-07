@@ -18,7 +18,7 @@ namespace Aplicacao.DTO
         public int? Id { get; set; }
         public DateTime DataOperacao { get; set; }
         public string TipoOperacao { get; set; }
-        public double ValorOperacao { get; set; }
+        public decimal ValorOperacao { get; set; }
         public virtual Carteira CarteiraSacado { get; set; }
         public virtual Carteira CarteiraCedente { get; set; }
     }

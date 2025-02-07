@@ -9,7 +9,7 @@ namespace Aplicacao.DTO
 {
     public class CarteiraDTO
     {
-        public CarteiraDTO(int? id, string numeroCarteira, string dataCriacao, string situacao, double saldo, Cliente cliente)
+        public CarteiraDTO(int? id, string numeroCarteira, string dataCriacao, string situacao, decimal saldo, Cliente cliente)
         {
             Id = id;
             NumeroCarteira = numeroCarteira;
@@ -23,7 +23,7 @@ namespace Aplicacao.DTO
         public string NumeroCarteira { get; set; }
         public string DataCriacao { get; set; }
         public string Situacao { get; set; }
-        public double Saldo { get; set; }
+        public decimal Saldo { get; set; }
         public virtual Cliente Cliente { get; set; }
     }
 }

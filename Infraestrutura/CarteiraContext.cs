@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dominio.Modelos;
+using Infraestrutura.Data.Mapeamentos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Data
@@ -20,6 +21,13 @@ namespace Infraestrutura.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Carteira> Carteiras { get; set; }
         public DbSet<Transacao> Transacoes { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ClienteMap());
+            modelBuilder.ApplyConfiguration(new RolesMap());
+        }
 
         public override int SaveChanges()
         {
