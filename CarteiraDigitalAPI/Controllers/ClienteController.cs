@@ -1,5 +1,6 @@
 ﻿using Aplicacao.DTO;
 using Aplicacao.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarteiraDigitalAPI.Controllers
@@ -15,20 +16,23 @@ namespace CarteiraDigitalAPI.Controllers
             _aplicacaoServicoCliente = aplicacaoServicoCliente;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult<IEnumerable<string>> ObterTodos()
         {
             return Ok(_aplicacaoServicoCliente.ObterTodos());
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public ActionResult<string> ObterPeloId(int id)
         {
             return Ok(_aplicacaoServicoCliente.ObterPeloId(id));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Post([FromBody] ClienteDTO clienteDTO)
+        public ActionResult <Task> Post([FromBody] ClienteDTO clienteDTO)
         {
             try
             {
@@ -45,6 +49,7 @@ namespace CarteiraDigitalAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public ActionResult Put([FromBody] ClienteDTO clienteDTO)
         {
@@ -63,6 +68,7 @@ namespace CarteiraDigitalAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete()]
         public ActionResult Delete([FromBody] ClienteDTO clienteDTO)
         {

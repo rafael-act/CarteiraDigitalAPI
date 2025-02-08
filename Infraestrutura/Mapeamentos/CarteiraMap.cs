@@ -14,7 +14,7 @@ namespace Infraestrutura.Data.Mapeamentos
         public void Configure(EntityTypeBuilder<Carteira> builder)
         {
             // Tabela
-            builder.ToTable("Carteira");
+            builder.ToTable("carteira");
 
             // Chave Primária
             builder.HasKey(x => x.Id);
@@ -27,29 +27,29 @@ namespace Infraestrutura.Data.Mapeamentos
             // Propriedades
             builder.Property(x => x.NumeroCarteira)
                 .IsRequired()
-                .HasColumnName("NumeroCarteira")
+                .HasColumnName("numeroCarteira")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(100);
 
             builder.Property(x => x.DataCriacao)
             .IsRequired()
-            .HasColumnName("DataCriacao")
+            .HasColumnName("dataCriacao")
             .HasColumnType("VARCHAR");
 
             builder.Property(x => x.Situacao)
               .IsRequired()
-              .HasColumnName("Situacao")
+              .HasColumnName("situacao")
               .HasColumnType("VARCHAR")
               .HasMaxLength(20);
 
             builder.Property(x => x.Saldo)
             .IsRequired()
-            .HasColumnName("Saldo")
+            .HasColumnName("saldo")
             .HasColumnType("NUMERIC");
 
             builder.Property(x => x.Cliente.Id)
             .IsRequired()
-            .HasColumnName("ClienteId")
+            .HasColumnName("clienteId")
             .HasColumnType("integer");
         }
     }

@@ -19,7 +19,7 @@ namespace Aplicacao.Servico
             _servicoCarteira = servicoCarteira;
             _mapperCarteira = mapperCarteira;
         }
-    
+
         public void Adicionar(CarteiraDTO obj)
         {
             var objCarteira = _mapperCarteira.MapperToEntity(obj);
@@ -37,9 +37,15 @@ namespace Aplicacao.Servico
             _servicoCarteira.Dispose();
         }
 
-        public CarteiraDTO ObterPeloId(int id)
+        public async Task<CarteiraDTO> ObterCarteira(string numeroCarteira)
         {
-            var objCarteira = _servicoCarteira.ObterPeloId(id);
+            var objCarteira = await _servicoCarteira.ObterCarteira(numeroCarteira);
+            return _mapperCarteira.MapperToDTO(objCarteira);
+        }
+
+        public async Task<CarteiraDTO> ObterPeloId(int id)
+        {
+            var objCarteira = await _servicoCarteira.ObterPeloId(id);
             return _mapperCarteira.MapperToDTO(objCarteira);
         }
 

@@ -18,15 +18,16 @@ namespace CarteiraDigitalAPI.Controllers
     {
         [AllowAnonymous]
         [HttpPost("Registrar")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Registrar([FromBody] RegisterViewModel model,
                                               [FromServices] CarteiraContext context)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = new Cliente(model.Name,"",model.Email,DateTime.Now,true)
+            var user = new Cliente(0,model.Nome,model.SobreNome,model.Email,DateTime.Now,true)
             {
                 Slug = model.Email.Replace("@", "-").Replace(".", "-"),
-                RolesId = 1,
+                RolesId = 2,
                 PasswordHash = PasswordHasher.Hash(model.Password),
             };
             try
@@ -42,7 +43,7 @@ namespace CarteiraDigitalAPI.Controllers
             }
             catch
             {
-                return StatusCode(500, "Error Interno");
+                return StatusCode(500, "Erro Interno");
             }
         }
 
@@ -58,7 +59,6 @@ namespace CarteiraDigitalAPI.Controllers
 
             var cliente = await context
                .Clientes
-               .Include(x => x.Roles)
                .AsNoTracking()
                .FirstOrDefaultAsync(x => x.Email == model.Email);
 
@@ -98,7 +98,7 @@ namespace CarteiraDigitalAPI.Controllers
             if (user == null || role == null)
                 return StatusCode(401, "Id Inválido");
 
-            user.Roles = role;
+            user.Role = role;
 
             await context.SaveChangesAsync();
             return Ok();

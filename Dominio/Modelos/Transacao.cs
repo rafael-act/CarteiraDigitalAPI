@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Modelos
 {
-    [Table("teachers")]
+    [Table("transacao")]
     public class Transacao : DbContext
     {
         public Transacao(DateTime dataOperacao, string tipoOperacao, decimal valorOperacao, Carteira carteiraSacado, Carteira carteiraCedente)
@@ -32,7 +32,9 @@ namespace Dominio.Modelos
         public int? carteirasacadoid { get; set; }
         [Column("carteiracedenteid")]
         public int? carteiracedenteid { get; set; }
+        [NotMapped]
         public virtual Carteira CarteiraSacado { get; set; }
+        [NotMapped]
         public virtual Carteira CarteiraCedente { get; set; }
     }
 }

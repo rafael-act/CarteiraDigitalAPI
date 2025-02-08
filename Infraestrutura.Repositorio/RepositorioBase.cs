@@ -13,12 +13,12 @@ namespace Infraestrutura.Repositorio
             _context = context;
         }
 
-        public void Adicionar(TEntity obj)
+        public async Task Adicionar(TEntity obj)
         {
             try
             {
                 _context.Set<TEntity>().Add(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -44,9 +44,14 @@ namespace Infraestrutura.Repositorio
             _context.Dispose();
         }
 
-        public TEntity ObterPeloId(int id)
+        public async Task<TEntity> ObterPeloId(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            var entity = await _context.Set<TEntity>().FindAsync(id);
+
+            if (entity == null)
+                throw new KeyNotFoundException($"{typeof(TEntity).Name} com ID {id} não encontrado.");
+
+            return entity;
         }
 
         public IEnumerable<TEntity> ObterTodos()

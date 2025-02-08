@@ -21,10 +21,10 @@ namespace Aplicacao.Servico
             _mapperCliente = mapperCliente;
         }
 
-        public void Adicionar(ClienteDTO obj)
+        public async Task Adicionar(ClienteDTO obj)
         {
             var objCliente = _mapperCliente.MapperToEntity(obj);
-            _servicoCliente.Adicionar(objCliente);
+            await _servicoCliente.Adicionar(objCliente);
         }
 
         public void Atualizar(ClienteDTO obj)
@@ -38,9 +38,9 @@ namespace Aplicacao.Servico
             _servicoCliente.Dispose();
         }
 
-        public ClienteDTO ObterPeloId(int id)
+        public async Task<ClienteDTO> ObterPeloId(int id)
         {
-            var objCliente = _servicoCliente.ObterPeloId(id);
+            var objCliente = await _servicoCliente.ObterPeloId(id);
             return _mapperCliente.MapperToDTO(objCliente);
         }
 

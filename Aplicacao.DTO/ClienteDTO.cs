@@ -2,7 +2,7 @@
 {
     public class ClienteDTO
     {
-        public ClienteDTO(int? id, string nome, string sobrenome, string email, DateTime dataCadastro, bool ativo)
+        public ClienteDTO(int id, string nome, string sobrenome, string email, DateTime dataCadastro, bool ativo)
         {
             Id = id;
             Nome = nome;
@@ -12,7 +12,7 @@
             Ativo = ativo;
         }
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string Nome { get; set; }
 

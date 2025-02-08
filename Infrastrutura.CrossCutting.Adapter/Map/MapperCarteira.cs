@@ -39,5 +39,6 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
             return carteiraDTO;
         }
 
+       
     }
 }

@@ -9,9 +9,9 @@ namespace Aplicacao.Interface
 {
     public interface IAplicacaoServicoCliente
     {
-        void Adicionar(ClienteDTO obj);
+        Task Adicionar(ClienteDTO obj);
 
-        ClienteDTO ObterPeloId(int id);
+        Task<ClienteDTO> ObterPeloId(int id);
 
         IEnumerable<ClienteDTO> ObterTodos();
 

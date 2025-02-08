@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Modelos
 {
-    [Table("teachers")]
+    [Table("cliente")]
     public class Cliente : DbContext
     {
         public Cliente(int id, string nome, string sobrenome, string email, DateTime dataCadastro, bool ativo)
@@ -22,7 +22,7 @@ namespace Dominio.Modelos
         }
         [System.ComponentModel.DataAnnotations.Key]
         [Column("id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Column("nome")]
         public string Nome { get; set; }
         [Column("sobrenome")]
@@ -39,6 +39,8 @@ namespace Dominio.Modelos
         public string? Slug { get; set; }
         [Column("rolesid")]
         public int RolesId { get; set; }
-        public Role? Roles { get; set; }
+        [NotMapped]
+        public virtual Role Role { get; set; }
+        public virtual Carteira Carteira { get; set; }
     }
 }

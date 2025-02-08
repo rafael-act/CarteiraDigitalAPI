@@ -16,7 +16,8 @@ namespace Infrastrutura.CrossCutting.Adapter.Interfaces
 
         IEnumerable<CarteiraDTO> MapperListClientes(IEnumerable<Carteira> carteira);
 
-        CarteiraDTO MapperToDTO(Carteira carteira);
+      CarteiraDTO MapperToDTO(Carteira carteira);
+
 
         #endregion
     }

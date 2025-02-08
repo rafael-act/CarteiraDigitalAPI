@@ -38,9 +38,9 @@ namespace Aplicacao.Servico
             _servicoTransacao.Dispose();
         }
 
-        public TransacaoDTO ObterPeloId(int id)
+        public async Task<TransacaoDTO> ObterPeloId(int id)
         {
-            var objTransacao = _servicoTransacao.ObterPeloId(id);
+            var objTransacao = await _servicoTransacao.ObterPeloId(id);
             return _mapperTransacao.MapperToDTO(objTransacao);
         }
 

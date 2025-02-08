@@ -18,14 +18,9 @@ namespace Dominio.Servico.Servico
             _repositorio = repositorio;
         }
 
-        public virtual void Adicionar(TEntity obj)
+        public virtual async Task Adicionar(TEntity obj)
         {
-            _repositorio.Adicionar(obj);
-        }
-
-        public virtual TEntity ObterPeloId(int id)
-        {
-            return _repositorio.ObterPeloId(id);
+            await _repositorio.Adicionar(obj);
         }
 
         public virtual IEnumerable<TEntity> ObterTodos()
@@ -46,6 +41,11 @@ namespace Dominio.Servico.Servico
         public void Dispose()
         {
            _repositorio.Dispose();
+        }
+
+        Task<TEntity> IServicoBase<TEntity>.ObterPeloId(int id)
+        {
+            return _repositorio.ObterPeloId(id);
         }
     }
 }

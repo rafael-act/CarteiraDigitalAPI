@@ -11,7 +11,7 @@ namespace Aplicacao.Interface
     {
         void Adicionar(TransacaoDTO obj);
 
-        TransacaoDTO ObterPeloId(int id);
+        Task<TransacaoDTO>ObterPeloId(int id);
 
         IEnumerable<TransacaoDTO> ObterTodos();
 

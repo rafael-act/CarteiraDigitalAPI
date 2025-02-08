@@ -8,9 +8,9 @@ namespace Dominio.Core.Interfaces.Repositorios
 {
     public interface IRepositorioBase<TEntity> where TEntity : class
     {
-        void Adicionar(TEntity obj);
+        Task Adicionar(TEntity obj);
 
-        TEntity ObterPeloId(int id);
+        Task<TEntity> ObterPeloId(int id);
 
         IEnumerable<TEntity> ObterTodos();
 

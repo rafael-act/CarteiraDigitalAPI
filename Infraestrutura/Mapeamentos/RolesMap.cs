@@ -13,7 +13,7 @@ namespace Infraestrutura.Data.Mapeamentos
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("Role");
+            builder.ToTable("role");
 
             builder.HasKey(x => x.Id);
 
@@ -24,7 +24,7 @@ namespace Infraestrutura.Data.Mapeamentos
             builder.Property(x => x.Name)
                 .HasMaxLength(128)
                 .HasColumnType("VARCHAR")
-                .HasColumnName("Name");
+                .HasColumnName("name");
 
         }
     }

@@ -9,5 +9,6 @@ namespace Dominio.Core.Interfaces.Repositorios
 {
     public interface IRepositorioCarteira : IRepositorioBase<Carteira>
     {
+        Task<Carteira> ObterCarteira(string numeroCarteira);
     }
 }

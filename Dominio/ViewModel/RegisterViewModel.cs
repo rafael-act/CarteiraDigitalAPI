@@ -9,13 +9,15 @@ namespace Dominio.Modelos.ViewModel
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Nome é obrigatório")]
+        public string Nome { get; set; }
+        [Required(ErrorMessage = "SobreNome é obrigatório")]
+        public string SobreNome { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Email must be valid")]
+        [Required(ErrorMessage = "Email é obrigatório")]
+        [EmailAddress(ErrorMessage = "Email deve ser válido")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Password é obrigatório")]
         public string Password { get; set; }
     }
 }

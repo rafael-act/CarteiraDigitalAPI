@@ -11,7 +11,7 @@ namespace Aplicacao.Interface
     {
         void Adicionar(CarteiraDTO obj);
 
-        CarteiraDTO ObterPeloId(int id);
+        Task<CarteiraDTO> ObterPeloId(int id);
 
         IEnumerable<CarteiraDTO> ObterTodos();
 
@@ -20,5 +20,6 @@ namespace Aplicacao.Interface
         void Remover(CarteiraDTO obj);
 
         void Dispose();
+        Task<CarteiraDTO> ObterCarteira(string numeroCarteira);
     }
 }

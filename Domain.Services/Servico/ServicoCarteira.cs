@@ -16,5 +16,12 @@ namespace Dominio.Servico.Servico
         {
             _repositorio = repositorio;
         }
+
+
+        Task<Carteira> IServicoCarteira.ObterCarteira(string numeroCarteira)
+        {
+            return _repositorio.ObterCarteira(numeroCarteira);
+
+        }
     }
 }

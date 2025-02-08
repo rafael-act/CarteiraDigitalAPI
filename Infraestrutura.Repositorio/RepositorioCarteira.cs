@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dominio.Modelos;
 using Dominio.Core.Interfaces.Repositorios;
 using Infraestrutura.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Repositorio
 {
@@ -13,8 +14,18 @@ namespace Infraestrutura.Repositorio
     {
         private readonly CarteiraContext _context;
         public RepositorioCarteira(CarteiraContext context) : base(context)
-        {   
+        {
             _context = context;
+        }
+
+        public async Task<Carteira> ObterCarteira(string numeroCarteira)
+        {
+            var carteira = await _context.Carteiras.FirstOrDefaultAsync(x => x.NumeroCarteira == numeroCarteira);
+
+            if (carteira == null)
+                throw new KeyNotFoundException($"Carteira com número {numeroCarteira} não encontrada.");
+
+            return carteira;
         }
     }
 }

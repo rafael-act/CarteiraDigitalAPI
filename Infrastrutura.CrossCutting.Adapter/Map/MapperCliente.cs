@@ -20,7 +20,7 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
 
         public Cliente MapperToEntity(ClienteDTO clienteDTO)
         {
-            Cliente cliente = new Cliente(clienteDTO.Nome,clienteDTO.Sobrenome,clienteDTO.Email,clienteDTO.DataCadastro,clienteDTO.Ativo)
+            Cliente cliente = new Cliente(clienteDTO.Id,clienteDTO.Nome,clienteDTO.Sobrenome,clienteDTO.Email,clienteDTO.DataCadastro,clienteDTO.Ativo)
             {
                 Id = clienteDTO.Id
             };

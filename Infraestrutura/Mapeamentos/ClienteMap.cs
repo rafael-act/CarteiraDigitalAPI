@@ -14,7 +14,7 @@ namespace Infraestrutura.Data.Mapeamentos
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             // Tabela
-            builder.ToTable("Cliente");
+            builder.ToTable("cliente");
 
             // Chave Primária
             builder.HasKey(x => x.Id);
@@ -27,43 +27,46 @@ namespace Infraestrutura.Data.Mapeamentos
             // Propriedades
             builder.Property(x => x.Nome)
                 .IsRequired()
-                .HasColumnName("Nome")
+                .HasColumnName("nome")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(100);
 
-            builder.Property(x => x.Nome)
+            builder.Property(x => x.Sobrenome)
                .IsRequired()
-               .HasColumnName("Sobrenome")
+               .HasColumnName("sobrenome")
                .HasColumnType("VARCHAR")
                .HasMaxLength(100);
 
             builder.Property(x => x.Email)
                 .IsRequired()
-                .HasColumnName("Email")
+                .HasColumnName("email")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(150); 
             
             builder.Property(x => x.DataCadastro)
                 .IsRequired()
-                .HasColumnName("DataCadastro")
-                .HasColumnType("VARCHAR");
+                .HasColumnName("datacadastro")
+                .HasColumnType("date");
 
             builder.Property(x => x.Ativo)
                 .IsRequired()
-                .HasColumnName("Ativo");
+                .HasColumnName("ativo");
 
             builder.Property(x => x.PasswordHash).IsRequired()
-                .HasColumnName("PasswordHash")
+                .HasColumnName("passwordhash")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(255);
 
             builder.Property(x => x.Slug)
                 .IsRequired()
-                .HasColumnName("Slug")
+                .HasColumnName("slug")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(80);
 
-
+            builder.Property(x => x.RolesId)
+                .HasColumnName("rolesid")
+                .HasColumnType("numeric")
+               .ValueGeneratedOnAdd();
             // Índices
             builder
                 .HasIndex(x => x.Slug, "IX_User_Slug")

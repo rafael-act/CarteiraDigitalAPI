@@ -11,7 +11,6 @@ namespace CarteiraDigitalAPI.Seguranca
             {
                 new(ClaimTypes.Name, usuario.Nome),
                 new(ClaimTypes.Email, usuario.Email),
-                new(ClaimTypes.Role, usuario.Roles.Name)
             };
             return result;
         }
