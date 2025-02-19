@@ -13,12 +13,12 @@ namespace Infraestrutura.Repositorio
             _context = context;
         }
 
-        public async Task Adicionar(TEntity obj)
+        public void Adicionar(TEntity obj)
         {
             try
             {
                 _context.Set<TEntity>().Add(obj);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {

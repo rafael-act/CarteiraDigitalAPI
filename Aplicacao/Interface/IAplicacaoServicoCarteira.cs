@@ -21,5 +21,8 @@ namespace Aplicacao.Interface
 
         void Dispose();
         Task<CarteiraDTO> ObterCarteira(string numeroCarteira);
+
+        Task AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar);
+        Task TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar);
     }
 }

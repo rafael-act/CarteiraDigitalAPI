@@ -38,6 +38,12 @@ namespace Aplicacao.Servico
             _servicoTransacao.Dispose();
         }
 
+        public  IEnumerable<TransacaoDTO> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        {
+            var lista =  _servicoTransacao.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
+            return _mapperTransacao.MapperListTransacao(lista);
+        }
+
         public async Task<TransacaoDTO> ObterPeloId(int id)
         {
             var objTransacao = await _servicoTransacao.ObterPeloId(id);

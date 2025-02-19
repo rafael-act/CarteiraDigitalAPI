@@ -16,15 +16,18 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
         {
             foreach (var item in transacao)
             {
-                TransacaoDTO carteiraDTO = new TransacaoDTO(item.TipoOperacao, item.CarteiraSacado, item.CarteiraCedente);
-                transacaoList.Add(carteiraDTO);
+                TransacaoDTO transacaoDTO = new TransacaoDTO(item.TipoOperacao, item.CarteiraSacado, item.CarteiraCedente);
+                transacaoDTO.ValorOperacao = item.ValorOperacao;
+                transacaoDTO.DataOperacao = item.DataOperacao;
+                transacaoDTO.Id = item.Id;
+                transacaoList.Add(transacaoDTO);
             }
             return transacaoList;
         }
 
         public TransacaoDTO MapperToDTO(Transacao transacao)
         {
-            TransacaoDTO transacaoDTO = new TransacaoDTO(transacao.TipoOperacao,transacao.CarteiraSacado,transacao.CarteiraCedente)
+            TransacaoDTO transacaoDTO = new TransacaoDTO(transacao.TipoOperacao, transacao.CarteiraSacado, transacao.CarteiraCedente)
             {
                 Id = transacao.Id,
                 DataOperacao = transacao.DataOperacao,
@@ -35,9 +38,14 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
 
         public Transacao MapperToEntity(TransacaoDTO transacaoDTO)
         {
-            Transacao transacao = new Transacao(transacaoDTO.DataOperacao,transacaoDTO.TipoOperacao,transacaoDTO.ValorOperacao,transacaoDTO.CarteiraSacado,transacaoDTO.CarteiraCedente)
+            Transacao transacao = new Transacao
             {
                 Id = transacaoDTO.Id,
+                DataOperacao = transacaoDTO.DataOperacao,
+                TipoOperacao = transacaoDTO.TipoOperacao,
+                ValorOperacao = transacaoDTO.ValorOperacao,
+                CarteiraSacado = transacaoDTO.CarteiraSacado,
+                CarteiraCedente = transacaoDTO.CarteiraCedente
             };
             return transacao;
         }

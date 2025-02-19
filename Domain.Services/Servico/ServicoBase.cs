@@ -20,7 +20,7 @@ namespace Dominio.Servico.Servico
 
         public virtual async Task Adicionar(TEntity obj)
         {
-            await _repositorio.Adicionar(obj);
+            _repositorio.Adicionar(obj);
         }
 
         public virtual IEnumerable<TEntity> ObterTodos()

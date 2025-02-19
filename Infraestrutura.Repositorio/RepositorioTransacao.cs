@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Dominio.Modelos;
 using Dominio.Core.Interfaces.Repositorios;
 using Infraestrutura.Data;
+using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Repositorio
 {
@@ -17,5 +19,24 @@ namespace Infraestrutura.Repositorio
         {
             _context = context;
         }
+
+        public IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        {
+            IQueryable<Transacao> query = _context.Transacoes
+               .Where(t => t.CarteiraCedente.Id == clienteId);
+
+            if (dtInicial.HasValue)
+            {
+                query = query.Where(t => t.DataOperacao >= dtInicial.Value.ToUniversalTime());
+            }
+
+            if (dtFinal.HasValue)
+            {
+                query = query.Where(t => t.DataOperacao <= dtFinal.Value.ToUniversalTime());
+            }
+
+            return query.ToList();
+        }
+
     }
 }

@@ -9,5 +9,6 @@ namespace Dominio.Core.Interfaces.Repositorios
 {
     public interface IRepositorioTransacao : IRepositorioBase<Transacao>
     {
+        IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal);
     }
 }

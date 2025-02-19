@@ -10,5 +10,6 @@ namespace Dominio.Core.Interfaces.Servicos
     public interface IServicoCarteira : IServicoBase<Carteira>
     {
         Task<Carteira> ObterCarteira(string numeroCarteira);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Aplicacao.DTO;
+using Dominio.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace Aplicacao.Interface
         void Atualizar(TransacaoDTO obj);
 
         void Remover(TransacaoDTO obj);
-
         void Dispose();
+
+        IEnumerable<TransacaoDTO>ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal);
     }
 }

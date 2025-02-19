@@ -47,9 +47,13 @@ namespace Infraestrutura.Data.Mapeamentos
             .HasColumnName("saldo")
             .HasColumnType("NUMERIC");
 
+            builder.Property(x => x.ClienteId)
+            .IsRequired()
+            .HasColumnName("clienteid")
+            .HasColumnType("integer"); 
+
             builder.Property(x => x.Cliente.Id)
             .IsRequired()
-            .HasColumnName("clienteId")
             .HasColumnType("integer");
         }
     }

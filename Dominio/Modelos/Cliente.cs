@@ -38,9 +38,9 @@ namespace Dominio.Modelos
         [Column("slug")]
         public string? Slug { get; set; }
         [Column("rolesid")]
+        [ForeignKey("Role")]
         public int RolesId { get; set; }
-        [NotMapped]
         public virtual Role Role { get; set; }
-        public virtual Carteira Carteira { get; set; }
+        public virtual ICollection<Carteira> Carteiras{ get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace Dominio.Core.Interfaces.Servicos
 {
     public interface IServicoTransacao:IServicoBase<Transacao>
     {
+        IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal);
     }
 }

@@ -19,7 +19,6 @@ namespace Dominio.Modelos
         public int Id { get; set; }
         [Column("name")]
         public string Name { get; set; }
-        [NotMapped]
-        public virtual Cliente Cliente { get; set; }
+        public virtual ICollection<Cliente> Clientes { get; set; }
     }
 }

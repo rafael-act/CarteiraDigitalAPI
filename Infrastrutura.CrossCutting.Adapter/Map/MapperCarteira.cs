@@ -15,15 +15,18 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
 
         public Carteira MapperToEntity(CarteiraDTO carteiraDTO)
         {
-            Carteira carteira = new Carteira(carteiraDTO.NumeroCarteira, carteiraDTO.DataCriacao, carteiraDTO.Situacao, carteiraDTO.Saldo, carteiraDTO.Cliente)
-            {
-                Id = carteiraDTO.Id
-            };
+            Carteira carteira = new Carteira();
+            carteira.Id = carteiraDTO.Id;
+            carteira.NumeroCarteira = carteiraDTO.NumeroCarteira;
+            carteira.DataCriacao = carteiraDTO.DataCriacao;
+            carteira.Situacao = carteiraDTO.Situacao;
+            carteira.Saldo = carteiraDTO.Saldo;
+            carteira.Cliente = carteiraDTO.Cliente;
 
             return carteira;
 
         }
-        public IEnumerable<CarteiraDTO> MapperListClientes(IEnumerable<Carteira> carteira)
+        public IEnumerable<CarteiraDTO> MapperListCarteira(IEnumerable<Carteira> carteira)
         {
             foreach (var item in carteira)
             {
@@ -39,6 +42,6 @@ namespace Infraestrutura.CrossCutting.Adapter.Map
             return carteiraDTO;
         }
 
-       
+
     }
 }

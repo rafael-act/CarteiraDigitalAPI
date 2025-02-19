@@ -14,7 +14,7 @@ namespace Infrastrutura.CrossCutting.Adapter.Interfaces
 
         Carteira MapperToEntity(CarteiraDTO carteiraDTO);
 
-        IEnumerable<CarteiraDTO> MapperListClientes(IEnumerable<Carteira> carteira);
+        IEnumerable<CarteiraDTO> MapperListCarteira(IEnumerable<Carteira> carteira);
 
       CarteiraDTO MapperToDTO(Carteira carteira);
 

@@ -16,5 +16,10 @@ namespace Dominio.Servico.Servico
         {
             _repositorio = repositorio;
         }
+
+        public IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        {
+            return _repositorio.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
+        }
     }
 }

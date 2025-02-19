@@ -17,7 +17,7 @@ namespace Dominio.Modelos.ViewModel
         [Required(ErrorMessage = "Email é obrigatório")]
         [EmailAddress(ErrorMessage = "Email deve ser válido")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Password é obrigatório")]
+        [Required(ErrorMessage = "Grupo Usuario é obrigatório")]
         public string Password { get; set; }
     }
 }

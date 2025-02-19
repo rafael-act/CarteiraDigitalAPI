@@ -11,14 +11,6 @@ namespace Dominio.Modelos
     [Table("transacao")]
     public class Transacao : DbContext
     {
-        public Transacao(DateTime dataOperacao, string tipoOperacao, decimal valorOperacao, Carteira carteiraSacado, Carteira carteiraCedente)
-        {
-            DataOperacao = dataOperacao;
-            TipoOperacao = tipoOperacao;
-            ValorOperacao = valorOperacao;
-            CarteiraSacado = carteiraSacado;
-            CarteiraCedente = carteiraCedente;
-        }
         [System.ComponentModel.DataAnnotations.Key]
         [Column("id")]
         public int? Id { get; set; }
@@ -32,9 +24,7 @@ namespace Dominio.Modelos
         public int? carteirasacadoid { get; set; }
         [Column("carteiracedenteid")]
         public int? carteiracedenteid { get; set; }
-        [NotMapped]
-        public virtual Carteira CarteiraSacado { get; set; }
-        [NotMapped]
-        public virtual Carteira CarteiraCedente { get; set; }
+        public virtual Carteira? CarteiraSacado { get; set; }
+        public virtual Carteira? CarteiraCedente { get; set; }
     }
 }

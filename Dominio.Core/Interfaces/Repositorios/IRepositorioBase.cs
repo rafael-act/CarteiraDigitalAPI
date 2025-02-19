@@ -8,7 +8,7 @@ namespace Dominio.Core.Interfaces.Repositorios
 {
     public interface IRepositorioBase<TEntity> where TEntity : class
     {
-        Task Adicionar(TEntity obj);
+        void Adicionar(TEntity obj);
 
         Task<TEntity> ObterPeloId(int id);
 

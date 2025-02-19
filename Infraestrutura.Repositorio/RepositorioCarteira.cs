@@ -20,11 +20,12 @@ namespace Infraestrutura.Repositorio
 
         public async Task<Carteira> ObterCarteira(string numeroCarteira)
         {
-            var carteira = await _context.Carteiras.FirstOrDefaultAsync(x => x.NumeroCarteira == numeroCarteira);
+            var carteira = await _context.Carteiras.Include(x=>x.Cliente)
+                .FirstOrDefaultAsync(x => x.NumeroCarteira == numeroCarteira);
 
             if (carteira == null)
                 throw new KeyNotFoundException($"Carteira com número {numeroCarteira} não encontrada.");
-
+            Console.WriteLine(carteira.Cliente?.Nome);
             return carteira;
         }
     }

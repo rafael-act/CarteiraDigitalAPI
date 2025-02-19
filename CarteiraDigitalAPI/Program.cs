@@ -1,4 +1,5 @@
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using CarteiraDigitalAPI.Seguranca;
 using Infraestrutura.CrossCutting.IOC;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace CarteiraDigitalAPI
 {
@@ -20,19 +22,22 @@ namespace CarteiraDigitalAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            }); ;
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    Name="Authorization",
-                    Type=SecuritySchemeType.ApiKey,
-                    Scheme="Bearer",
-                    BearerFormat="JWT",
-                    In=ParameterLocation.Header,
-                    Description= "JWT Authorization header utilizando Bearer scheme"
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header utilizando Bearer scheme"
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -49,15 +54,20 @@ namespace CarteiraDigitalAPI
                     }
                 });
             });
-
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddDbContext<CarteiraContext>(
-                optionsBuilder => optionsBuilder.UseNpgsql(
+                optionsBuilder => optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseNpgsql(
                     builder.Configuration.GetConnectionString("connectionString")
                     )
+                .EnableSensitiveDataLogging(), ServiceLifetime.Transient
                 );
 
+
+
             //JWT Config
-            var key = Encoding.ASCII.GetBytes(Configuracao.JwtKey);
+            var key = Encoding.UTF8.GetBytes(Configuracao.JwtKey);
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
