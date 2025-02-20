@@ -17,14 +17,14 @@ namespace CarteiraDigitalAPI.Controllers
         //[Authorize(Roles = "admin,user")]
         [HttpGet]
         [Route("ListarTransferenciasPorCliente/{clienteId}")]
-        public IActionResult ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        public async Task<IActionResult> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
         {
             try
             {
                 if (clienteId <= 0)
                     return NotFound();
 
-                var lista = _aplicacaoServicoTransferencia.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
+                var lista = await _aplicacaoServicoTransferencia.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
                 return new JsonResult(lista.ToList());
 
             }

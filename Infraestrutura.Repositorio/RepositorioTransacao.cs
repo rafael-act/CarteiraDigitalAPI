@@ -20,7 +20,7 @@ namespace Infraestrutura.Repositorio
             _context = context;
         }
 
-        public IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        public async Task<IEnumerable<Transacao>> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
         {
             IQueryable<Transacao> query = _context.Transacoes
                .Where(t => t.CarteiraCedente.Id == clienteId);
@@ -35,7 +35,7 @@ namespace Infraestrutura.Repositorio
                 query = query.Where(t => t.DataOperacao <= dtFinal.Value.ToUniversalTime());
             }
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
     }

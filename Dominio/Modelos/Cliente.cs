@@ -13,7 +13,7 @@ namespace Dominio.Modelos
     {
         public Cliente(int id, string nome, string sobrenome, string email, DateTime dataCadastro, bool ativo)
         {
-            Id = Id;
+            Id = id;
             Nome = nome;
             Sobrenome = sobrenome;
             Email = email;

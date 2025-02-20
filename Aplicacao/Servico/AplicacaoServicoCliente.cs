@@ -1,59 +1,54 @@
 ﻿using Aplicacao.DTO;
 using Aplicacao.Interface;
-using Dominio.Core.Interfaces.Servicos;
+using Dominio.Core.Interfaces.UnitOfWork;
 using Infrastrutura.CrossCutting.Adapter.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplicacao.Servico
 {
     public class AplicacaoServicoCliente : IAplicacaoServicoCliente
     {
-        private readonly IServicoCliente _servicoCliente;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperCliente _mapperCliente;
 
-        public AplicacaoServicoCliente(IServicoCliente servicoCliente, IMapperCliente mapperCliente)
+        public AplicacaoServicoCliente(IUnitOfWork unitOfWork, IMapperCliente mapperCliente)
         {
-            _servicoCliente = servicoCliente;
+            _unitOfWork = unitOfWork;
             _mapperCliente = mapperCliente;
         }
 
         public async Task Adicionar(ClienteDTO obj)
         {
             var objCliente = _mapperCliente.MapperToEntity(obj);
-            await _servicoCliente.Adicionar(objCliente);
+            await _unitOfWork.Clientes.AddAsync(objCliente);
         }
 
         public void Atualizar(ClienteDTO obj)
         {
             var objCliente = _mapperCliente.MapperToEntity(obj);
-            _servicoCliente.Atualizar(objCliente);
+            _unitOfWork.Clientes.Update(objCliente);
         }
 
         public void Dispose()
         {
-            _servicoCliente.Dispose();
+            _unitOfWork.Dispose();
         }
 
         public async Task<ClienteDTO> ObterPeloId(int id)
         {
-            var objCliente = await _servicoCliente.ObterPeloId(id);
+            var objCliente = await _unitOfWork.Clientes.GetByIdAsync(id);
             return _mapperCliente.MapperToDTO(objCliente);
         }
 
-        public IEnumerable<ClienteDTO> ObterTodos()
+        public async Task<IEnumerable<ClienteDTO>> ObterTodos()
         {
-            var objCliente = _servicoCliente.ObterTodos();
+            var objCliente = await _unitOfWork.Clientes.GetAllAsync();
             return _mapperCliente.MapperListClientes(objCliente);
         }
 
         public void Remover(ClienteDTO obj)
         {
             var objCliente = _mapperCliente.MapperToEntity(obj);
-            _servicoCliente.Remover(objCliente);
+            _unitOfWork.Clientes.Remove(objCliente);
         }
     }
 }

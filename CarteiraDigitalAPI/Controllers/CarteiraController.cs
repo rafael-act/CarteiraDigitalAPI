@@ -27,7 +27,7 @@ namespace CarteiraDigitalAPI.Controllers
                 if (string.IsNullOrEmpty(numeroCarteira) || string.IsNullOrWhiteSpace(numeroCarteira))
                     return null;
 
-                return _aplicacaoServicoCarteira.ObterCarteira(numeroCarteira).Result;
+                return await _aplicacaoServicoCarteira.ObterCarteira(numeroCarteira);
             }
             catch (Exception ex)
             {
@@ -38,7 +38,7 @@ namespace CarteiraDigitalAPI.Controllers
         //[Authorize(Roles = "admin,user")]
         [HttpPost]
         [Route("AdicionarSaldoCarteira")]
-        public IActionResult AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar)
+        public async Task<IActionResult> AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace CarteiraDigitalAPI.Controllers
                 {
                     return StatusCode(400, "Valor a adicionar na carteira obrigatório.");
                 }
-                _aplicacaoServicoCarteira.AdicionarSaldoCarteira(numeroCarteira, valorAdicionar);
+                await _aplicacaoServicoCarteira.AdicionarSaldoCarteira(numeroCarteira, valorAdicionar);
 
                 return Ok();
             }
@@ -61,7 +61,7 @@ namespace CarteiraDigitalAPI.Controllers
         //[Authorize(Roles = "admin,user")]
         [HttpPost]
         [Route("TransferênciaEntreCarteiras")]
-        public IActionResult TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
+        public async Task<IActionResult> TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace CarteiraDigitalAPI.Controllers
                 {
                     return StatusCode(400, "Valor a movimentar nas carteiras obrigatório.");
                 }
-                _aplicacaoServicoCarteira.TransferênciaEntreCarteiras(carteiraCedente, carteiraSacado, valorAdicionar);
+                await _aplicacaoServicoCarteira.TransferênciaEntreCarteiras(carteiraCedente, carteiraSacado, valorAdicionar);
             }
             catch (Exception)
             {

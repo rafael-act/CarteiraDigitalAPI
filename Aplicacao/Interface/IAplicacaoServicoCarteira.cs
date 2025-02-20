@@ -9,17 +9,16 @@ namespace Aplicacao.Interface
 {
     public interface IAplicacaoServicoCarteira
     {
-        void Adicionar(CarteiraDTO obj);
+        Task Adicionar(CarteiraDTO obj);
 
         Task<CarteiraDTO> ObterPeloId(int id);
 
-        IEnumerable<CarteiraDTO> ObterTodos();
+        Task<IEnumerable<CarteiraDTO>> ObterTodos();
 
         void Atualizar(CarteiraDTO obj);
 
         void Remover(CarteiraDTO obj);
 
-        void Dispose();
         Task<CarteiraDTO> ObterCarteira(string numeroCarteira);
 
         Task AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar);

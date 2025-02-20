@@ -3,9 +3,11 @@ using Aplicacao.Servico;
 using Autofac;
 using Dominio.Core.Interfaces.Repositorios;
 using Dominio.Core.Interfaces.Servicos;
+using Dominio.Core.Interfaces.UnitOfWork;
 using Dominio.Servico.Servico;
 using Infraestrutura.CrossCutting.Adapter.Map;
 using Infraestrutura.Repositorio;
+using Infraestrutura.Repositorio.UnitOfWork;
 using Infrastrutura.CrossCutting.Adapter.Interfaces;
 
 namespace Infraestrutura.CrossCutting.IOC
@@ -32,7 +34,8 @@ namespace Infraestrutura.CrossCutting.IOC
             builder.RegisterType<MapperCliente>().As<IMapperCliente>();
             builder.RegisterType<MapperCarteira>().As<IMapperCarteira>();
             builder.RegisterType<MapperTransacao>().As<IMapperTransacao>();
-
+            
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
         }
     }

@@ -11,9 +11,9 @@ namespace Dominio.Core.Interfaces.Servicos
     {
         Task Adicionar(TEntity obj);
 
-        Task<TEntity> ObterPeloId(int id);
+        Task<TEntity?> ObterPeloId(int id);
 
-        IEnumerable<TEntity> ObterTodos();
+        Task<IEnumerable<TEntity>> ObterTodos();
 
         void Atualizar(TEntity obj);
 

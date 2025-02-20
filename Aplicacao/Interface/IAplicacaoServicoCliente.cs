@@ -13,7 +13,7 @@ namespace Aplicacao.Interface
 
         Task<ClienteDTO> ObterPeloId(int id);
 
-        IEnumerable<ClienteDTO> ObterTodos();
+        Task<IEnumerable<ClienteDTO>> ObterTodos();
 
         void Atualizar(ClienteDTO obj);
 
