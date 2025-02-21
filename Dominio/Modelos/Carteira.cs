@@ -37,7 +37,20 @@ namespace Dominio.Modelos
         }
         public decimal DiminuirSaldoCarteira(decimal valorReduzir)
         {
-            return this.Saldo = this.Saldo - valorReduzir;
+            try
+            {
+                if (this.Saldo < valorReduzir)
+                {
+                    throw new InvalidOperationException("Saldo insuficiente");
+                }
+                return this.Saldo = this.Saldo - valorReduzir;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

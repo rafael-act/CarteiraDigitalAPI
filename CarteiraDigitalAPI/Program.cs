@@ -64,8 +64,6 @@ namespace CarteiraDigitalAPI
                 .EnableSensitiveDataLogging(), ServiceLifetime.Transient
                 );
 
-
-
             //JWT Config
             var key = Encoding.UTF8.GetBytes(Configuracao.JwtKey);
             builder.Services.AddAuthentication(options =>

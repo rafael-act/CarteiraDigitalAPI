@@ -60,8 +60,8 @@ namespace CarteiraDigitalAPI.Controllers
 
         //[Authorize(Roles = "admin,user")]
         [HttpPost]
-        [Route("TransferênciaEntreCarteiras")]
-        public IActionResult TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
+        [Route("TransferenciaEntreCarteiras")]
+        public IActionResult TransferenciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace CarteiraDigitalAPI.Controllers
                 {
                     return StatusCode(400, "Valor a movimentar nas carteiras obrigatório.");
                 }
-                _aplicacaoServicoCarteira.TransferênciaEntreCarteiras(carteiraCedente, carteiraSacado, valorAdicionar);
+                _aplicacaoServicoCarteira.TransferenciaEntreCarteiras(carteiraCedente, carteiraSacado, valorAdicionar);
             }
             catch (Exception)
             {

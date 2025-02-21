@@ -23,6 +23,6 @@ namespace Aplicacao.Interface
         Task<CarteiraDTO> ObterCarteira(string numeroCarteira);
 
         Task AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar);
-        Task TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar);
+        Task TransferenciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar);
     }
 }

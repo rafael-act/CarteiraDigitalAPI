@@ -26,11 +26,9 @@ namespace CarteiraDigitalAPI.Controllers
 
                 var lista = _aplicacaoServicoTransferencia.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
                 return new JsonResult(lista.ToList());
-
             }
             catch (Exception)
             {
-
                 throw;
             }
 
