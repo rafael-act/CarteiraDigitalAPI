@@ -16,42 +16,43 @@ namespace CarteiraDigitalAPI.Controllers
             _aplicacaoServicoCliente = aplicacaoServicoCliente;
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpGet]
-        public ActionResult<IEnumerable<string>> ObterTodos()
+        [ProducesResponseType(typeof(IEnumerable<ClienteDTO>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObterTodos()
         {
-            return Ok(_aplicacaoServicoCliente.ObterTodos());
+            return Ok(await _aplicacaoServicoCliente.ObterTodos());
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpGet("{id}")]
-        public ActionResult<string> ObterPeloId(int id)
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObterPeloId(int id)
         {
-            return Ok(_aplicacaoServicoCliente.ObterPeloId(id));
+            return Ok(await _aplicacaoServicoCliente.ObterPeloId(id));
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult <Task> Post([FromBody] ClienteDTO clienteDTO)
+        public async Task<IActionResult> Post([FromBody] ClienteDTO clienteDTO)
         {
             try
             {
                 if (clienteDTO == null)
                     return NotFound();
 
-                _aplicacaoServicoCliente.Adicionar(clienteDTO);
+                await _aplicacaoServicoCliente.Adicionar(clienteDTO);
                 return Ok("Cliente Cadastrado com sucesso!");
             }
-            catch (Exception ex)
+            catch
             {
-
-                throw ex;
+                throw;
             }
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPut]
-        public ActionResult Put([FromBody] ClienteDTO clienteDTO)
+        public IActionResult Put([FromBody] ClienteDTO clienteDTO)
         {
             try
             {
@@ -63,14 +64,13 @@ namespace CarteiraDigitalAPI.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpDelete()]
-        public ActionResult Delete([FromBody] ClienteDTO clienteDTO)
+        public IActionResult Delete([FromBody] ClienteDTO clienteDTO)
         {
             try
             {
@@ -80,13 +80,10 @@ namespace CarteiraDigitalAPI.Controllers
                 _aplicacaoServicoCliente.Remover(clienteDTO);
                 return Ok("Cliente Removido com sucesso!");
             }
-            catch (Exception ex)
+            catch
             {
-
-                throw ex;
+                throw;
             }
-
         }
-
     }
 }

@@ -1,76 +1,63 @@
 ﻿using Dominio.Core.Interfaces.Repositorios;
 using Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infraestrutura.Repositorio
 {
-    public abstract class RepositorioBase<TEntity> : IDisposable, IRepositorioBase<TEntity> where TEntity : class
-
+    public abstract class RepositorioBase<T> : IRepositorioBase<T> where T : class
     {
-        private readonly CarteiraContext _context;
+        protected readonly CarteiraContext _context;
+
         public RepositorioBase(CarteiraContext context)
         {
             _context = context;
         }
 
-        public void Adicionar(TEntity obj)
+        public async Task AddAsync(T entity)
         {
-            try
-            {
-                _context.Set<TEntity>().Add(obj);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            await _context.Set<T>().AddAsync(entity);
         }
 
-        public void Atualizar(TEntity obj)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return _context.Set<T>().Where(expression);
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+        public void Update(T obj)
         {
             try
             {
                 _context.Entry(obj).State = EntityState.Modified;
-                _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 
-        public void Dispose()
+        public void Remove(T entity)
         {
-            _context.Dispose();
+            _context.Set<T>().Remove(entity);
         }
 
-        public async Task<TEntity> ObterPeloId(int id)
+        public void RemoveRange(IEnumerable<T> entities)
         {
-            var entity = await _context.Set<TEntity>().FindAsync(id);
-
-            if (entity == null)
-                throw new KeyNotFoundException($"{typeof(TEntity).Name} com ID {id} não encontrado.");
-
-            return entity;
-        }
-
-        public IEnumerable<TEntity> ObterTodos()
-        {
-            return _context.Set<TEntity>().ToList();
-        }
-
-        public void Remover(TEntity obj)
-        {
-            try
-            {
-                _context.Set<TEntity>().Remove(obj);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            _context.Set<T>().RemoveRange(entities);
         }
     }
 }

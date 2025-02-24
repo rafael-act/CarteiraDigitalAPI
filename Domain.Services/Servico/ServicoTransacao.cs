@@ -1,11 +1,6 @@
 ﻿using Dominio.Core.Interfaces.Repositorios;
 using Dominio.Core.Interfaces.Servicos;
 using Dominio.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio.Servico.Servico
 {
@@ -17,9 +12,9 @@ namespace Dominio.Servico.Servico
             _repositorio = repositorio;
         }
 
-        public IEnumerable<Transacao> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
+        public async Task<IEnumerable<Transacao>> ListarTransferenciasPorCliente(int clienteId, DateTime? dtInicial, DateTime? dtFinal)
         {
-            return _repositorio.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
+            return await _repositorio.ListarTransferenciasPorCliente(clienteId, dtInicial, dtFinal);
         }
     }
 }

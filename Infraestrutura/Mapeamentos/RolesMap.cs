@@ -21,10 +21,10 @@ namespace Infraestrutura.Data.Mapeamentos
                 .ValueGeneratedOnAdd()
                 .UseIdentityColumn();
 
-            builder.Property(x => x.Name)
+            builder.Property(x => x.Nome)
                 .HasMaxLength(128)
                 .HasColumnType("VARCHAR")
-                .HasColumnName("name");
+                .HasColumnName("nome");
 
         }
     }

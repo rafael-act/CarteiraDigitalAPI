@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Dominio.Core.Interfaces.Repositorios
 {
-    public interface IRepositorioBase<TEntity> where TEntity : class
+    public interface IRepositorioBase<T> where T : class
     {
-        void Adicionar(TEntity obj);
-
-        Task<TEntity> ObterPeloId(int id);
-
-        IEnumerable<TEntity> ObterTodos();
-
-        void Atualizar(TEntity obj);
-
-        void Remover(TEntity obj);
-
-        void Dispose();
+        Task<T?> GetByIdAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        Task AddAsync(T entity);
+        Task AddRangeAsync(IEnumerable<T> entities);
+        void Update(T obj);
+        void Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }

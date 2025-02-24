@@ -1,109 +1,105 @@
 ﻿using Aplicacao.DTO;
 using Aplicacao.Interface;
-using Dominio.Core.Interfaces.Servicos;
+using Dominio.Core.Interfaces.UnitOfWork;
 using Dominio.Modelos;
 using Infrastrutura.CrossCutting.Adapter.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplicacao.Servico
 {
-    public class AplicacaoServicoCarteira : IAplicacaoServicoCarteira
+    public class AplicacaoServicoCarteira : IAplicacaoServicoCarteira, IDisposable
     {
-        private readonly IServicoCarteira _servicoCarteira;
-        private readonly IServicoTransacao _servicoTransacao;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperCarteira _mapperCarteira;
-        public AplicacaoServicoCarteira(IServicoCarteira servicoCarteira,
-            IMapperCarteira mapperCarteira,
-            IServicoTransacao servicoTransacao)
+        public AplicacaoServicoCarteira(IUnitOfWork unitOfWork, IMapperCarteira mapperCarteira)
         {
-            _servicoCarteira = servicoCarteira;
+            _unitOfWork = unitOfWork;
             _mapperCarteira = mapperCarteira;
-            _servicoTransacao = servicoTransacao;
         }
 
-        public void Adicionar(CarteiraDTO obj)
+        public async Task Adicionar(CarteiraDTO obj)
         {
             var objCarteira = _mapperCarteira.MapperToEntity(obj);
-            _servicoCarteira.Adicionar(objCarteira);
+            await _unitOfWork.Carteiras.AddAsync(objCarteira);
         }
 
         public void Atualizar(CarteiraDTO obj)
         {
             var objCarteira = _mapperCarteira.MapperToEntity(obj);
-            _servicoCarteira.Atualizar(objCarteira);
+            _unitOfWork.Carteiras.Update(objCarteira);
         }
 
         public void Dispose()
         {
-            _servicoCarteira.Dispose();
+            _unitOfWork.Dispose();
         }
 
         public async Task<CarteiraDTO> ObterCarteira(string numeroCarteira)
         {
-            var objCarteira = await _servicoCarteira.ObterCarteira(numeroCarteira);
+            var objCarteira = await _unitOfWork.Carteiras.ObterCarteira(numeroCarteira);
             return _mapperCarteira.MapperToDTO(objCarteira);
         }
 
         public async Task<CarteiraDTO> ObterPeloId(int id)
         {
-            var objCarteira = await _servicoCarteira.ObterPeloId(id);
+            var objCarteira = await _unitOfWork.Carteiras.GetByIdAsync(id);
             return _mapperCarteira.MapperToDTO(objCarteira);
         }
 
-        public IEnumerable<CarteiraDTO> ObterTodos()
+        public async Task<IEnumerable<CarteiraDTO>> ObterTodos()
         {
-            var objCarteira = _servicoCarteira.ObterTodos();
+            var objCarteira = await _unitOfWork.Carteiras.GetAllAsync();
             return _mapperCarteira.MapperListCarteira(objCarteira);
         }
 
         public void Remover(CarteiraDTO obj)
         {
             var objCliente = _mapperCarteira.MapperToEntity(obj);
-            _servicoCarteira.Remover(objCliente);
+            _unitOfWork.Carteiras.Remove(objCliente);
         }
 
-
-        Task IAplicacaoServicoCarteira.AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar)
+        public async Task AdicionarSaldoCarteira(string numeroCarteira, decimal valorAdicionar)
         {
-            var carteira = _servicoCarteira.ObterCarteira(numeroCarteira).Result;
+            var carteira = await _unitOfWork.Carteiras.ObterCarteira(numeroCarteira);
             carteira.AdicionarSaldoCarteira(valorAdicionar);
-            _servicoCarteira.Atualizar(carteira);
-            var transacao = new Transacao();
-            transacao.DataOperacao = DateTime.UtcNow;
-            transacao.TipoOperacao = "Deposito";
-            transacao.ValorOperacao = valorAdicionar;
-            transacao.CarteiraSacado = null;
-            transacao.CarteiraCedente = carteira;
-            _servicoTransacao.Adicionar(transacao);
-            return Task.FromResult(0);
+            _unitOfWork.Carteiras.Update(carteira);
+            var transacao = new Transacao
+            {
+                DataOperacao = DateTime.UtcNow,
+                TipoOperacao = "Deposito",
+                ValorOperacao = valorAdicionar,
+                CarteiraSacado = null,
+                CarteiraCedente = carteira
+            };
+
+            await _unitOfWork.Transacoes.AddAsync(transacao);
+           
+            _unitOfWork.Complete();
         }
 
-        Task IAplicacaoServicoCarteira.TransferenciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
+        public async Task TransferênciaEntreCarteiras(string carteiraCedente, string carteiraSacado, decimal valorAdicionar)
         {
-            var objCarteiraCedente = _servicoCarteira.ObterCarteira(carteiraCedente).Result;//recebe
-            var objCarteiraSacado = _servicoCarteira.ObterCarteira(carteiraSacado).Result;//paga
+            var objCarteiraCedente = await _unitOfWork.Carteiras.ObterCarteira(carteiraCedente);//recebe
+            var objCarteiraSacado = await _unitOfWork.Carteiras.ObterCarteira(carteiraSacado);//paga
 
 
 
             objCarteiraCedente.AdicionarSaldoCarteira(valorAdicionar);
             objCarteiraSacado.DiminuirSaldoCarteira(valorAdicionar);
 
-            _servicoCarteira.Atualizar(objCarteiraCedente);
-            _servicoCarteira.Atualizar(objCarteiraSacado);
+            _unitOfWork.Carteiras.Update(objCarteiraCedente);
+            _unitOfWork.Carteiras.Update(objCarteiraSacado);
 
-            var transacao = new Transacao();
-            transacao.DataOperacao = DateTime.UtcNow;
-            transacao.TipoOperacao = "Transferencia";
-            transacao.ValorOperacao = valorAdicionar;
-            transacao.CarteiraSacado = objCarteiraSacado;
-            transacao.CarteiraCedente = objCarteiraCedente;
-            _servicoTransacao.Adicionar(transacao);
+            var transacao = new Transacao
+            {
+                DataOperacao = DateTime.UtcNow,
+                TipoOperacao = "Transferencia",
+                ValorOperacao = valorAdicionar,
+                CarteiraSacado = objCarteiraSacado,
+                CarteiraCedente = objCarteiraCedente
+            };
+            await _unitOfWork.Transacoes.AddAsync(transacao);
 
-            return Task.FromResult(0);
+            _unitOfWork.Complete();
         }
     }
 }
